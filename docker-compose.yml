@@ -1,9 +1,22 @@
 version: '3'
 services:
+  web:
+    build: .
+    entrypoint: ./entrypoint.sh
+    ports:
+      - "8080:80"
+    environment:
+      RAILS_ENV: development
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/rails
+      - ./bin:/rails/bin_host
   db:
     image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -12,16 +25,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./init:/docker-entrypoint-initdb.d
-  web:
-    build: .
-    command: bundle exec rails s -p 80 -b '0.0.0.0'
-    ports:
-      - "8080:80"
-    environment:
-      RAILS_ENV: development
-    depends_on:
-      - db
-    volumes:
-      - .:/rails
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 volumes:
   db_data:

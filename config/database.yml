@@ -13,16 +13,15 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  host: localhost
+  username: <%= ENV.fetch("MYSQL_USER") { "tennisuser" } %>
+  password: <%= ENV.fetch("MYSQL_PASSWORD") { "tennis_manager" } %>
+  host: db
   socket: /var/lib/mysql/mysql.sock
-  host: 127.0.0.1
   port: 3306
 
 development:
   <<: *default
-  database: tennis_reserve_development
+  database: <%= ENV.fetch("MYSQL_DATABASE") { "tennis_reserve" } %>
   socket: /var/lib/mysql/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -30,7 +29,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: tennis_reserve_test
+  database: <%= ENV.fetch("MYSQL_DATABASE") { "tennis_reserve" } %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -54,6 +53,6 @@ test:
 #
 production:
   <<: *default
-  database: tennis_reserve_production
-  username: tennis_reserve
-  password: <%= ENV["TENNIS_RESERVE_DATABASE_PASSWORD"] %>
+  database: <%= ENV.fetch("TENNIS_RESERVE_DATABASE") { "tennis_reserve" } %>
+  username: <%= ENV.fetch("TENNIS_RESERVE_DATABASE_USERNAME") { "tennisuser" } %>
+  password: <%= ENV.fetch("TENNIS_RESERVE_DATABASE_USERNAME") { "tennis_manager" } %>
