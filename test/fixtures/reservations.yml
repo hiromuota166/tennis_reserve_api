@@ -1,17 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
-  court: one
-  start_time: 2025-07-19 00:37:03
-  end_time: 2025-07-19 00:37:03
-  player_count: 1
-  status: 1
+  court_id: one
+  user_id: one
+  start_time: 2025-10-18 17:07:15
+  end_time: 2025-10-18 17:07:15
 
 two:
-  user: two
-  court: two
-  start_time: 2025-07-19 00:37:03
-  end_time: 2025-07-19 00:37:03
-  player_count: 1
-  status: 1
+  court_id: two
+  user_id: two
+  start_time: 2025-10-18 17:07:15
+  end_time: 2025-10-18 17:07:15
