@@ -13,3 +13,9 @@
   User.find_or_create_by(name: "テストユーザー#{n + 1}") do |user|
   end
 end
+
+# コートの作成
+["Court A", "Court B", "Court C"].each do |court_name|
+  Court.find_or_create_by(name: court_name) do |court|
+  end
+end
