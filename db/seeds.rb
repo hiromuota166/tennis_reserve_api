@@ -7,3 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# テストユーザーの作成
+10.times do |n|
+  User.find_or_create_by(name: "テストユーザー#{n + 1}") do |user|
+  end
+end
