@@ -8,6 +8,7 @@ echo "Waiting for database to be ready..."
 echo "Running database setup and migrations..."
 bin/rails db:create
 bin/rails db:migrate
+bin/rails db:seed
 
 # Webサーバーの起動
 echo "Starting Rails server..."
