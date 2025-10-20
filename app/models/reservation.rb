@@ -4,6 +4,20 @@ class Reservation < ApplicationRecord
 
   validate :double_booking
 
+  def self.create_new_reservation(params)
+    user = User.find_by!(name: params[:user_name])
+    court = Court.find_by!(name: params[:court_name])
+    start_time = Time.zone.parse(params[:start_time])
+    end_time = start_time + 1.hour
+
+    self.create(
+      user: user,
+      court: court,
+      start_time: start_time,
+      end_time: end_time
+    )
+  end
+
   private
 
   def double_booking
