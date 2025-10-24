@@ -2,6 +2,8 @@ class Reservation < ApplicationRecord
   belongs_to :court
   belongs_to :user
 
+  validate :before_start_time
+  validate :after_one_week
   validate :double_booking
 
   def self.create_new_reservation(params)
@@ -27,5 +29,17 @@ class Reservation < ApplicationRecord
                   .exists?
       errors.add(:base, 'この時間帯は既に予約されています。')
     end
+  end
+
+  def before_start_time
+    return if Time.zone.now <= start_time
+
+    errors.add(:start_time, '過去の時間には予約できません。')
+  end
+
+  def after_one_week
+    return if start_time <= 1.week.from_now
+
+    errors.add(:start_time, '1週間以上先の時間には予約できません。')
   end
 end
