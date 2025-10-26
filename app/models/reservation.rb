@@ -2,9 +2,9 @@ class Reservation < ApplicationRecord
   belongs_to :court
   belongs_to :user
 
-  validate :user_id, presence: true
-  validate :court_id, presence: true
-  validate :start_time, presence: true
+  validates :user_id, presence: true
+  validates :court_id, presence: true
+  validates :start_time, presence: true
 
   validate :before_start_time
   validate :after_one_week
