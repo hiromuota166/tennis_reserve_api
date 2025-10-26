@@ -24,6 +24,11 @@ class Reservation < ApplicationRecord
     )
   end
 
+  def self.delete_reservation(params)
+    reservation = Reservation.find_by!(id: params[:id])
+    reservation.destroy
+  end
+
   private
 
   def double_booking
