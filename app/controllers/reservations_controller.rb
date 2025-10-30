@@ -14,7 +14,7 @@ class ReservationsController < ApplicationController
   def destroy
     reservation = Reservation.delete_reservation(params)
     # 削除チェック
-    if reservation.destroyed?
+    if reservation
       render json: { message: '削除済み' }, status: :ok
     else
       render json: { error: '削除に失敗しました' }, status: :unprocessable_entity
