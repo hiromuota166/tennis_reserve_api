@@ -2,9 +2,9 @@ class Reservation < ApplicationRecord
   belongs_to :court
   belongs_to :user
 
-  validate :user_id, presence: true
-  validate :court_id, presence: true
-  validate :start_time, presence: true
+  validates :user_id, presence: true
+  validates :court_id, presence: true
+  validates :start_time, presence: true
 
   validate :before_start_time
   validate :after_one_week
@@ -22,6 +22,13 @@ class Reservation < ApplicationRecord
       start_time: start_time,
       end_time: end_time
     )
+  end
+
+  def self.delete_reservation(params)
+    reservation = Reservation.find_by(id: params[:id])
+    return nil unless reservation
+
+    reservation.destroy
   end
 
   private

@@ -3,12 +3,17 @@ class ReservationsController < ApplicationController
     reservation = Reservation.create_new_reservation(reservation_params)
     # 保存成功チェック
     if reservation.persisted?
-      render json: reservation, status: :created
+      render json: { message: '予約をが成功しました。' }, status: :created
     else
       render json: { errors: reservation.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    render json: { error: e.message }, status: :bad_request
+  end
+
+  def destroy
+    reservation = Reservation.delete_reservation(params)
+    return render(json: { error: '指定された予約が見つかりません。' }, status: :not_found) if reservation.nil?
+
+    render json: { message: '予約を削除しました。' }, status: :ok
   end
 
   private
