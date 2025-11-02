@@ -7,20 +7,13 @@ class ReservationsController < ApplicationController
     else
       render json: { errors: reservation.errors.full_messages }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    render json: { error: e.message }, status: :bad_request
   end
 
   def destroy
     reservation = Reservation.delete_reservation(params)
-    # 削除チェック
-    if reservation
-      render json: { message: '削除済み' }, status: :ok
-    else
-      render json: { error: '削除に失敗しました' }, status: :unprocessable_entity
-    end
-  rescue StandardError => e
-    render json: { error: e.message }, status: :not_found
+    return render(json: { error: '指定された予約が見つかりません。' }, status: :not_found) if reservation.nil?
+
+    render json: reservation, status: :ok
   end
 
   private
