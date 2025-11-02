@@ -25,7 +25,9 @@ class Reservation < ApplicationRecord
   end
 
   def self.delete_reservation(params)
-    reservation = Reservation.find_by!(id: params[:id])
+    reservation = Reservation.find_by(id: params[:id])
+    return nil unless reservation
+
     reservation.destroy
   end
 
